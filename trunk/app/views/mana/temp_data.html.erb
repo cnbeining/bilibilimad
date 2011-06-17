@@ -1,0 +1,32 @@
+<p><%= link_to h('<<<返回<<<'), :action => :index %></p>
+<div>
+  <table border="1" cellspacing="0">
+    <tr>
+      <th width="20">总分排名</th><th>总分</th><th>ID</th>
+      <th width="98">投稿时间</th><th>标题</th>
+      <th width="90">投稿人</th><th>播放</th><th>P</th>
+      <th>收藏</th><th>B</th><th>推荐</th>
+    </tr>
+<% rank_from = 20
+   @stats.each_with_index do |r, ind|
+             tr_styles = ["tr_#{ind%2}"]
+             tr_styles << "tr_changqi" if r['rank'] <= rank_from && r.is_changqi?%>
+    <tr class="<%=tr_styles.join ' '%>">
+      <td><%=r['rank']%></td>
+      <td><b><%=r['point']%></b></td>
+      <td><%=r.work.wid%></td>
+      <td><%=r.work.cdate.strftime "%Y-%m-%d %H:%M"%></td>
+      <td><%=h r.name%></td>
+      <td><%=h r.work.author %></td>
+      <td><%=r.click%></td>
+      <td><%=r.part%></td>
+      <td><%=r.stow%></td>
+      <td><%=r.yb%></td>
+      <td><%=r.tj%></td>
+    </tr>
+<% if r['rank'] == rank_from %>
+    <tr><td colspan="11">- 主 - 榜 - 界 -</td></tr>
+<% end %>
+    <% end %>
+  </table>
+</div>

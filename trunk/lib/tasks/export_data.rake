@@ -6,7 +6,7 @@ namespace :bld do
     pa = ENV['pa'] ? "#{BILI_PRO_PATH}#{ENV['pa']}/" : nil
     id1 = ENV['id1'] || (YAML.load(open(File.join "#{Rails.root}/config/last.yml")) rescue 0)
     id2 = ENV['id2'] || OriScan.last.id
-    except_ids = (YAML.load open(File.join "#{Rails.root}/config/except.yml") rescue [-1])
+    except_ids = Except.all_avid rescue [-1]
     #=====================================================================
     doc = File.new(pa ? pa + "_mad.csv" : "#{Rails.root}/_mad.csv", 'w')
     str = "总分排名,总分,id,投稿时间,标题,投稿人,点击,收藏,硬币,推荐,P\n"

@@ -8,13 +8,19 @@ class Result < ActiveRecord::Base
 
   #是否长期
   def is_changqi?
-    Result.count(:include => :weekly,
-      :conditions => ["score_rank <= weeklies.rank_from and results.work_id = ? and weeklies.id <= ?", work_id, weekly_id
-      ]) > 2
+    if weekly_id
+      Result.count(:include => :weekly,
+        :conditions => ["rank <= weeklies.rank_from and results.work_id = ? and weeklies.id <= ?", work_id, weekly_id
+        ]) > 2
+    else
+      Result.count(:include => :weekly,
+        :conditions => ["rank <= weeklies.rank_from and results.work_id = ?", work_id
+        ]) >= 2
+    end
   end
 
     #周刊统计数据
-  def self.stat id1, id2, except_ids
+  def self.stat id1, id2, except_ids=[-1]
     time = Time.now
     puts "*reading data..."
     results1 = OriResult.all :include => :work,

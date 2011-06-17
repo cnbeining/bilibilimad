@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"> 
+<head> 
+<title><%= @html_title || "週刊M@D排行榜" %></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="description" content="Nitori page template." /> 
+<meta name="keywords" content="biliex bilibili 哔哩哔哩" />
+<meta name="author" content="nitori" />
+<%=stylesheet_link_tag 'style.css'%>
+</head>
+<body><div id="main">
+  <div id="top">
+    <div class="foot menu">
+      <% if session[:bili_name] -%>
+        当前登录：<%=session[:bili_name] -%>@bilibili | [<%= link_to '退出', logout_path %>] |
+      <% end -%>
+    </div>
+    <div class="logo"><%=image_tag 'logo.png'%></div>
+  </div>
+  <div id="nitori"><%= yield %></div>
+  <div class="foot">&copy; biliex.info. 2011</div>
+</div></body> 
+</html>

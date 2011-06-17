@@ -1,0 +1,10 @@
+<p><%= link_to h('<<<返回<<<'), :action => :index %></p>
+<% form_for :except, :url => {:action => :add_excepts} do |f| %>
+  <p><%= f.text_field :ids, :class => :long %></p>
+  <p><%= f.submit '----加----' %></p>
+<% end %>
+<hr/>
+<% @excepts.each do |except| %>
+    <p>av<%=except.avid%> | <%= @works.detect{|w| w.wid == except.avid}.name rescue "[暂无信息]" %> |
+    <%= link_to "【删除】", :action => :delete_except, :id => except.id %></p>
+<% end %>
