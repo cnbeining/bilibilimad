@@ -6,7 +6,7 @@ namespace :bld do
     pa = ENV['pa'] ? "#{BILI_PRO_PATH}#{ENV['pa']}/" : nil
     id1 = ENV['id1'] || (YAML.load(open(File.join "#{Rails.root}/config/last.yml")) rescue 0)
     id2 = ENV['id2'] || OriScan.last.id
-    except_ids = (YAML.load open(File.join "#{Rails.root}/config/except.yml") rescue [-1])
+    except_ids = Except.all_avid rescue [-1]
     begin
       Weekly.transaction do
         weekly = Weekly.create! :name => ENV['name'], :wid => ENV['wid'], :last => Weekly.latest,
