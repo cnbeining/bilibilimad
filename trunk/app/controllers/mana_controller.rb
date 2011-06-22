@@ -9,8 +9,13 @@ class ManaController < ApplicationController
   def temp_data
     YAML::add_private_type(Result.rule.to_s)
     YAML::add_private_type(Work.to_s)
-    @stats = YAML.load(open("#{RAILS_ROOT}/config/_list.yml"))
+    @stats = YAML.load(open("#{Rails.root}/config/_list.yml"))
     @stats.each{|s| s.work = s[:work]}
+  end
+
+  def data
+    @weekly = params[:id] ? Weekly.find(params[:id]) : Weekly.last
+    @results = Result.find_all_by_weekly_id @weekly.id, :order => "rank", :limit => 100
   end
 
   def excepts
@@ -31,4 +36,24 @@ class ManaController < ApplicationController
     redirect_to :action => :excepts
   end
 
+  #pickup
+  def list_pickups
+
+  end
+
+  def new_pickups
+
+  end
+
+  def create_pickup
+
+  end
+
+  def update_pickups
+
+  end
+
+  def delete_pickup
+
+  end
 end
