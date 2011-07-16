@@ -9,8 +9,9 @@ namespace :bld do
     except_ids = Except.all_avid rescue [-1]
     begin
       Weekly.transaction do
-        weekly = Weekly.create! :name => ENV['name'], :wid => ENV['wid'], :last => Weekly.latest,
+        weekly = Weekly.create! :name => ENV['name'], :wid => ENV['wid'], :last => Weekly.latest, :rank_from => 20,
                                 :index => ENV['index'] || Weekly.maximum('"index"').to_i + 1, :rule => Result.rule.version
+        weekly.set_name OriScan.find(id2).created_at
       Result.stat(id1, id2, except_ids).each do |r|
         r.weekly_id = weekly.id
         r.save!

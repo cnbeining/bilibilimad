@@ -15,13 +15,16 @@ class ResultController < ApplicationController
     last_weekly = weekly.last
     pickup_wids = Pickup.find_all_by_weekly_id_and_ptype(params[:id], 1).collect(&:wid)
     pickup_self_wids = Pickup.find_all_by_weekly_id_and_ptype(params[:id], 2).collect(&:wid)
-    results = Result.rule.all :select => "w.wid, w.author, w.cdate, r.*", :joins => "r join works w on w.id = r.work_id",
+    results = Result.rule(weekly.rule).all :select => "w.wid, w.author, w.cdate, r.*", :joins => "r join works w on w.id = r.work_id",
                          :limit => params[:num], :order => "rank", :conditions => ["weekly_id = ?", params[:id]]
-    results += Result.rule.all :select => "w.wid, w.author, w.cdate, r.*", :joins => "r join works w on w.id = r.work_id",
+    results += Result.rule(weekly.rule).all :select => "w.wid, w.author, w.cdate, r.*", :joins => "r join works w on w.id = r.work_id",
                          :conditions => ["weekly_id = ? and w.wid in (?)", params[:id], pickup_wids]
-    results_self = Result.rule.all :select => "w.wid, w.author, w.cdate, r.*", :joins => "r join works w on w.id = r.work_id",
+    results_self = Result.rule(weekly.rule).all :select => "w.wid, w.author, w.cdate, r.*", :joins => "r join works w on w.id = r.work_id",
                          :conditions => ["weekly_id = ? and w.wid in (?)", params[:id], pickup_self_wids]
-    results.each{|r| r[:score] = r.point}
+    results.each do |r|
+       r[:score] = r.point
+       r[:tj_score] = r.tj_point if weekly.rule > 1
+    end
     wids = results.collect(&:wid)
     last_ranks = {}
     if last_weekly

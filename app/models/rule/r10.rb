@@ -7,11 +7,11 @@ class Rule::R10 < Result
    end
 
   def get_ranking_point
-    click.to_f / part + stow * stow_revised - [yb * 100 + tj, 20000].min
+    self[:score] = click.to_f / part + stow * stow_revised - [yb * 100 + tj, 20000].min
   end
 
   def point
-    get_ranking_point
+    self[:score] || get_ranking_point
   end
 
   def self.get_stow_revised stow
