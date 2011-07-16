@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Bilidanmaku::Application.load_tasks
+Bili::Application.load_tasks

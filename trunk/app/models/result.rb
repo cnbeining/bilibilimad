@@ -2,8 +2,8 @@ class Result < ActiveRecord::Base
   belongs_to :work
   belongs_to :weekly
 
-  def self.rule
-    eval("Rule::R#{(RULE * 10).to_i}")
+  def self.rule version = RULE
+    eval("Rule::R#{(version * 10).to_i}")
   end
 
   #是否长期

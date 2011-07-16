@@ -18,7 +18,7 @@ module BilibiliApi
          return render :text => "You are good person!"
         end
       else
-        redirect_to %[https://secure.bilibili.us/login.php?api=#{key.url}&hash=#{key.bili_key}]
+        redirect_to %[https://secure.bilibili.tv/login.php?api=#{key.url}&hash=#{key.bili_key}]
       end
     end
   end

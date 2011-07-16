@@ -1,4 +1,4 @@
-Bilidanmaku::Application.routes.draw do
+Bili::Application.routes.draw do
   get "pickup/index"
 
   #get "index/index"
@@ -24,7 +24,7 @@ Bilidanmaku::Application.routes.draw do
   match 'api/data/:id/top/:num.:format', :controller => 'result', :action => :top,
                :id => /\d{1,3}/, :num =>  /[1-9]|\d{1,2}|1[1-4]\d/ ,
                :conditions => { :method => :get }
-
+  match 'api/fm/:id', :controller => 'index', :action => :pic, :id => /\d{1,6}/, :conditions => { :method => :get }
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
