@@ -1,0 +1,1 @@
+rails 3.0.6 | 部分数据库、功能附属于bilbiliranking
